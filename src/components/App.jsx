@@ -3,6 +3,7 @@ import axios from 'axios';
 import SearchBar from './SearchBar/SearchBar';
 import key from './key'
 import SideBar from './SideBar/SideBar';
+import Comments from './Comments/Comments';
 
 
 class App extends Component {
@@ -30,11 +31,6 @@ async  getVideo(){
         video: response.data.items[0]
     })
 }
-
-async  getComments(){
-    let response = await axios.get('http://127.0.0.1:8000/comments/')
-    console.log(response.data)
-} 
 
     getSearch = async(search) => {
     let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${key}&q=${search}`)
@@ -66,6 +62,7 @@ async  getComments(){
                     src={`https://www.youtube.com/embed/${this.state.videoId}`}
                     frameBorder="0"></iframe>
                     <h4>{description}</h4>
+                    <Comments videoId={this.state.videoId}/>
                 </div>
                 <div className="col-4 d-flex justify-content-end" >
                     <SideBar videos={this.state.videos}/>
