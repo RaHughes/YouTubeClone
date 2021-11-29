@@ -9,14 +9,15 @@ class Comments extends Component {
         this.state = { 
             comments: [],
             videoId: '',
-            likes: 0,
-            dislikes: 0,
             comment: ''
         }
     }
 
     componentDidMount(){
         this.getComments()
+        if(this.state.videoId === '') {
+            this.getComments()
+        } 
     }
 
     handleChange = (event) => {
@@ -27,8 +28,16 @@ class Comments extends Component {
 
     getComments = async() => {
         let response = await axios.get('http://127.0.0.1:8000/comments/')
+        let comments = response.data
+        let filteredComments = []
+        comments.forEach(comment => {
+            if(comment.videoId === this.props.videoId) {
+                filteredComments.push(comment)
+            }
+        })
         this.setState({
-            comments: response.data
+            videoId: this.props.videoId,
+            comments: filteredComments
         })
     }
 
@@ -36,8 +45,8 @@ class Comments extends Component {
         event.preventDefault()
         let comment = {
             videoId: this.props.videoId,
-            likes: this.state.likes,
-            dislikes: this.state.dislikes,
+            likes: 0,
+            dislikes: 0,
             comment: this.state.comment
         }
         this.setState({
@@ -46,7 +55,23 @@ class Comments extends Component {
         await axios.post("http://127.0.0.1:8000/comments/", comment)
     }
 
+    increment = async(id, name) => {
+        let newArr = this.state.comments
+        let value;
+        newArr.forEach(comment => {
+            if(comment.id === id) {
+                comment[name] += 1
+                value = comment[name]
+            }
+        })
+        this.setState({
+            comments: newArr
+        })
+    await axios.patch(`http://127.0.0.1:8000/comments/${id}/`, { [name]: value })
+ }
+
     render() { 
+        
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
@@ -56,7 +81,13 @@ class Comments extends Component {
                 <div>
                     {this.state.comments.map(comment => {
                         if(comment.videoId === this.props.videoId){ 
-                            return <p>{comment.comment}</p>
+                            return <div key={comment.id}>
+                                    <p>{comment.comment}</p>
+                                    <button name="likes" onClick={() => this.increment(comment.id, 'likes')}>Like</button>
+                                     {<p>{comment.likes}</p>}
+                                    <button name="dislikes" onClick={() => this.increment(comment.id, 'dislikes')}>Dislike</button>
+                                    {<p>{comment.dislikes}</p>}
+                                    </div>
                         }
                     })}
                 </div>
