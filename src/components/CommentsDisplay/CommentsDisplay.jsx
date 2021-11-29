@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import Replies from '../Replies/Replies';
 
 const CommentsDisplay = (props) => {
     const[comment,SetComment] = useState([])
@@ -35,6 +36,7 @@ const CommentsDisplay = (props) => {
                                      {<p>{comment.likes}</p>}
                                     <button name="dislikes" onClick={() => increment(comment.id, 'dislikes')}>Dislike</button>
                                     {<p>{comment.dislikes}</p>}
+                                    <Replies commentId={comment.id} videoId={props.videoId} />
                                     </div>
                         }
                     })}

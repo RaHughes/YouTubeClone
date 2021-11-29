@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import Replies from '../Replies/Replies';
 import CommentsDisplay from '../CommentsDisplay/CommentsDisplay';
 
 
@@ -10,36 +11,16 @@ class Comments extends Component {
         this.state = { 
             comments: [],
             videoId: '',
-            comment: '',
+            comment: ''
         }
     }
 
     componentDidMount(){
         this.getComments()
+        if(this.state.videoId === '') {
+            this.getComments()
+        } 
     }
-
-    async getComments() {
-        let response = await axios.get('http://127.0.0.1:8000/comments/')
-        this.setState({
-            videoId: this.props.videoId
-        })
-        this.filterComments(response.data)
-    }
-
-     filterComments(array){
-         let filteredComments = []
-         array.forEach(comment => {
-             if(comment.videoId === this.state.videoId) {
-                 console.log(comment)
-                filteredComments.push(comment)
-             }
-        })
-         this.setState({
-             comments: filteredComments
-         })
-         console.log(filteredComments)
-    }
-
 
     handleChange = (event) => {
         this.setState({
@@ -47,10 +28,25 @@ class Comments extends Component {
         })
     }
 
+    getComments = async() => {
+        let response = await axios.get('http://127.0.0.1:8000/comments/')
+        let comments = response.data
+        let filteredComments = []
+        comments.forEach(comment => {
+            if(comment.videoId === this.props.videoId) {
+                filteredComments.push(comment)
+            }
+        })
+        this.setState({
+            videoId: this.props.videoId,
+            comments: filteredComments
+        })
+    }
+
     handleSubmit = async(event) => {
         event.preventDefault()
         let comment = {
-            videoId: this.state.videoId,
+            videoId: this.props.videoId,
             likes: 0,
             dislikes: 0,
             comment: this.state.comment
@@ -61,19 +57,35 @@ class Comments extends Component {
         await axios.post("http://127.0.0.1:8000/comments/", comment)
     }
 
-    render() { 
-        return (
+    increment = async(id, name) => {
+        let newArr = this.state.comments
+        let value;
+        newArr.forEach(comment => {
+            if(comment.id === id) {
+                comment[name] += 1
+                value = comment[name]
+            }
+        })
+        this.setState({
+            comments: newArr
+        })
+    await axios.patch(`http://127.0.0.1:8000/comments/${id}/`, { [name]: value })
+ }
+
+ render() { 
+    return (
+        <div>
+            <form onSubmit={this.handleSubmit}>
+                <input name="comment" onChange={this.handleChange} value={this.state.comment}></input>
+                <button type="submit">Post Comment</button>
+            </form>
             <div>
-                <form onSubmit={this.handleSubmit}>
-                    <input name="comment" onChange={this.handleChange} value={this.state.comment}></input>
-                    <button type="submit">Post Comment</button>
-                </form>
-                <div>
-                    <CommentsDisplay comments={this.props.comments} videoId={this.props.videoId}/>
-                </div>
+                <CommentsDisplay comments={this.props.comments} videoId={this.props.videoId}/>
             </div>
-        );
-    }
+        </div>
+    );
 }
+}
+
 
 export default Comments;
