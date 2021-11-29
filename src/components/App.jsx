@@ -10,8 +10,6 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            comments: [],
-            replies: [],
             videoId: '',
             video: '',
             videos: []
