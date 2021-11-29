@@ -12,33 +12,54 @@ class App extends Component {
         this.state = {
             videoId: '',
             video: '',
-            videos: []
+            videos: [],
+            comments: []
         }
     }
 
 
-componentDidMount(){
-    this.getVideo()
-}    
+    componentDidMount(){
+        this.getVideo()
+        this.getComments()
+    }    
 
-async  getVideo(){
-    let response = await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=${key}&part=snippet,contentDetails,statistics,status`)
-    console.log(response.data.items[0])
-    this.setState({
-        videoId: response.data.items[0].id,
-        video: response.data.items[0]
-    })
-}
+    async  getVideo(){
+        let response = await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=${key}&part=snippet,contentDetails,statistics,status`)
+        this.setState({
+            videoId: response.data.items[0].id,
+            video: response.data.items[0]
+        })
+    }
 
     getSearch = async(search) => {
     let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${key}&q=${search}`)
-    console.log(response.data)
     this.setState({
         videos: response.data.items,
         videoId: response.data.items[0].id.videoId,
         video:  response.data.items[0]
     })
+    this.getComments()
 }
+
+    async getComments() {
+        console.log('Im working')
+        let response = await axios.get('http://127.0.0.1:8000/comments/')
+        this.filterComments(response.data)
+    }
+
+    filterComments(array){
+        let filteredComments = []
+        array.forEach(comment => {
+            if(comment.videoId === this.state.videoId) {
+                console.log(comment)
+                filteredComments.push(comment)
+            }
+        })
+        this.setState({
+            comments: filteredComments
+        })
+        console.log(filteredComments)
+    }
 
     render(){
     let title = 'Loading'
@@ -60,7 +81,7 @@ async  getVideo(){
                     src={`https://www.youtube.com/embed/${this.state.videoId}`}
                     frameBorder="0"></iframe>
                     <h4>{description}</h4>
-                    <Comments videoId={this.state.videoId}/>
+                    {<Comments videoId={this.state.videoId} comments={this.state.comments}/>}
                 </div>
                 <div className="col-4 d-flex justify-content-end" >
                     <SideBar videos={this.state.videos}/>
@@ -69,7 +90,6 @@ async  getVideo(){
         </div>
         )
     }
-
 }
 
 export default App; 
