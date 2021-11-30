@@ -1,5 +1,6 @@
 import React, { Component } from 'react'; 
 import axios from 'axios';
+import './SearchBar.css'
 
 class SearchBar extends Component {
     constructor(props) {
@@ -23,9 +24,9 @@ class SearchBar extends Component {
 
     render() { 
         return (
-            <div>
-            <input name="search"onChange={this.handleChange}></input>
-            <button onClick={() => this.handleSumbit(this.state.search)}>Search</button>
+            <div className="searchbar">
+            <input name="search" onChange={this.handleChange}></input>
+            <button onClick={() => this.handleSumbit(this.state.search)}>🔍</button>
             </div>
         )
     }
