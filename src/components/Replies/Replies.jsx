@@ -35,6 +35,9 @@ class Replies extends Component {
             replies: [...this.state.replies, reply]
         })
         await axios.post(`http://127.0.0.1:8000/replies/`, reply)
+        this.setState({
+            reply: ''
+        })
     }
 
     handleChange = (event) => {
@@ -46,7 +49,7 @@ class Replies extends Component {
     render() { 
         return ( 
             <form onSubmit={this.handleSubmit}>
-                <input onChange={this.handleChange} name="reply"></input>
+                <input value={this.state.reply} onChange={this.handleChange} name="reply"></input>
                 <button type="submit">Add Reply</button>
                 <RepliesDisplay replies={this.state.replies} commentId={this.props.commentId}/>
             </form>
