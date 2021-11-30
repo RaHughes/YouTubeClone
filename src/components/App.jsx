@@ -43,7 +43,6 @@ class App extends Component {
 }
 
     async getComments() {
-        console.log('Im working')
         let response = await axios.get('http://127.0.0.1:8000/comments/')
         this.filterComments(response.data)
     }
@@ -52,14 +51,24 @@ class App extends Component {
         let filteredComments = []
         array.forEach(comment => {
             if(comment.videoId === this.state.videoId) {
-                console.log(comment)
                 filteredComments.push(comment)
             }
         })
         this.setState({
             comments: filteredComments
         })
-        console.log(filteredComments)
+    }
+
+    addComment = () => {
+        this.getComments()
+    }
+
+    selectVideo = (videoId, video) =>{
+        this.setState({
+            videoId: videoId,
+            video: video
+        })
+        this.getComments()
     }
 
     render(){
@@ -82,10 +91,10 @@ class App extends Component {
                     src={`https://www.youtube.com/embed/${this.state.videoId}`}
                     frameBorder="0"></iframe>
                     <h4>{description}</h4>
-                    {<Comments videoId={this.state.videoId} comments={this.state.comments}/>}
+                    {<Comments videoId={this.state.videoId} comments={this.state.comments} addComment={this.addComment}/>}
                 </div>
                 <div className="col-4 d-flex justify-content-end" >
-                    <SideBar videos={this.state.videos}/>
+                    <SideBar videos={this.state.videos} selectVideo={this.selectVideo}/>
                 </div>
             </div>
         </div>
