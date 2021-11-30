@@ -23,3 +23,9 @@
     align-items: left;
     justify-content: left;
 }
+
+.youtubeicon{
+    height: 65px;
+    width:300px;
+    margin-right: 40px;
+}

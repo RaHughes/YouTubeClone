@@ -5,5 +5,11 @@
 
 input{
     width: 60%;
+    height: 45px;
 }
 
+.searchbutton{
+    height: 45px;
+    width: 45px;
+    margin-bottom: 3px;
+}

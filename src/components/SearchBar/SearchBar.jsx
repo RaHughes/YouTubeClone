@@ -29,7 +29,7 @@ class SearchBar extends Component {
         return (
             <div className="searchbar">
             <input value={this.state.search} name="search" onChange={this.handleChange}></input>
-            <button onClick={() => this.handleSumbit(this.state.search)}>🔍</button>
+            <button className="searchbutton" onClick={() => this.handleSumbit(this.state.search)}>🔍</button>
             </div>
         )
     }
