@@ -53,6 +53,9 @@ class Comments extends Component {
         })
         await axios.post("http://127.0.0.1:8000/comments/", comment)
         this.props.addComment()
+        this.setState({
+            comment: ''
+        })
     }
 
     increment = async(id, name) => {
@@ -74,7 +77,7 @@ class Comments extends Component {
     return (
         <div>
             <form onSubmit={this.handleSubmit}>
-                <input name="comment" onChange={this.handleChange} value={this.state.comment}></input>
+                <input value={this.state.comment} name="comment" onChange={this.handleChange} value={this.state.comment}></input>
                 <button type="submit">Post Comment</button>
             </form>
             <div>
