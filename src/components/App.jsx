@@ -85,11 +85,11 @@ class App extends Component {
             <h1>YouTube Clone</h1>
             <div className="row">
                 <div className="col-8">
-                    <h2>{title}</h2>
                     <iframe id="existing-iframe-example"
                     width="100%" height="600px"
                     src={`https://www.youtube.com/embed/${this.state.videoId}`}
                     frameBorder="0"></iframe>
+                    <h2>{title}</h2>
                     <h4>{description}</h4>
                     {<Comments videoId={this.state.videoId} comments={this.state.comments} addComment={this.addComment}/>}
                 </div>
