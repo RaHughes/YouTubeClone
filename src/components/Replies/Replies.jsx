@@ -26,7 +26,7 @@ class Replies extends Component {
 
     handleSubmit = async(event) => {
         event.preventDefault()
-        let reply ={
+        let reply = {
             commentId: this.props.commentId,
             videoId: this.props.videoId,
             reply: this.state.reply
