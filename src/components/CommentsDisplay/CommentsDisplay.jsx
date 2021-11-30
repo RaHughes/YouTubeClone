@@ -36,7 +36,7 @@ const CommentsDisplay = (props) => {
                                      {<p>{comment.likes}</p>}
                                     <button name="dislikes" onClick={() => increment(comment.id, 'dislikes')}>Dislike</button>
                                     {<p>{comment.dislikes}</p>}
-                                    <Replies commentId={comment.id} videoId={props.videoId} />
+                                    <Replies key={comment.id} commentId={comment.id} videoId={props.videoId} />
                                     </div>
                         }
                     })}
