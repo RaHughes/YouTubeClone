@@ -4,6 +4,7 @@ import SearchBar from './SearchBar/SearchBar';
 import key from './key'
 import SideBar from './SideBar/SideBar';
 import Comments from './Comments/Comments';
+import './App.css'
 
 
 
@@ -81,8 +82,10 @@ class App extends Component {
 
     return(
         <div>
-            <SearchBar startSearch={this.getSearch}/>
-            <h1>YouTube Clone</h1>
+            <div className="header">
+                <h1 className="youtubeclone">YouTube Clone</h1>
+                <SearchBar startSearch={this.getSearch}/>
+            </div>
             <div className="row">
                 <div className="col-8">
                     <iframe id="existing-iframe-example"
