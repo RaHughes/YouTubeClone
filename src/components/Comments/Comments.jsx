@@ -17,9 +17,6 @@ class Comments extends Component {
 
     componentDidMount(){
         this.getComments()
-        if(this.state.videoId === '') {
-            this.getComments()
-        } 
     }
 
     handleChange = (event) => {
@@ -55,6 +52,7 @@ class Comments extends Component {
             comments: [...this.state.comments, comment]
         })
         await axios.post("http://127.0.0.1:8000/comments/", comment)
+        this.props.addComment()
     }
 
     increment = async(id, name) => {
