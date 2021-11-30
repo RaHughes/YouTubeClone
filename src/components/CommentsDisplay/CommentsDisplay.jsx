@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Replies from '../Replies/Replies';
+import './CommentsDisplay.css'
 
 const CommentsDisplay = (props) => {
     const[comment,SetComment] = useState([])
@@ -30,11 +31,11 @@ const CommentsDisplay = (props) => {
         <div>
             {props.comments.map(comment => {
                         if(comment.videoId === props.videoId){ 
-                            return <div key={comment.id}>
+                            return <div className="comments" key={comment.id}>
                                     <p>{comment.comment}</p>
-                                    <button name="likes" onClick={() => increment(comment.id, 'likes')}>Like</button>
-                                     {<p>{comment.likes}</p>}
-                                    <button name="dislikes" onClick={() => increment(comment.id, 'dislikes')}>Dislike</button>
+                                    <button name="likes" onClick={() => increment(comment.id, 'likes')}>👍</button>
+                                    {<p>{comment.likes}</p>}
+                                    <button name="dislikes" onClick={() => increment(comment.id, 'dislikes')}>👎</button>
                                     {<p>{comment.dislikes}</p>}
                                     <Replies key={comment.id} commentId={comment.id} videoId={props.videoId} />
                                     </div>
