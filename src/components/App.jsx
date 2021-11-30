@@ -86,7 +86,7 @@ class App extends Component {
     return(
         <div>
             <div className="header">
-                <h1 className="youtubeclone">YouTube Clone</h1>
+                <img src="../../public/youtubeicon.png"/>
                 <SearchBar startSearch={this.getSearch}/>
             </div>
             <div className="row">
