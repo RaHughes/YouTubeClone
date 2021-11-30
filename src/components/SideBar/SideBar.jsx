@@ -11,10 +11,10 @@ const SideBar = (props) => {
         )
     }
     else{
-        return(<div>
+        return(<div className="videos">
             {props.videos.map(video => {
                 return <form key={Math.random()} onSubmit={() => props.selectVideo(video.id.videoId, video)}> 
-                <iframe width="400" height="320" src={`https://www.youtube.com/embed/${video.id.videoId}`}>
+                <iframe width="300" height="140" src={`https://www.youtube.com/embed/${video.id.videoId}`}>
                 </iframe>
                 <button type="submit">Select Video</button>
                 </form>

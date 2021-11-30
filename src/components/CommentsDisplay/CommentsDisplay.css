@@ -5,6 +5,4 @@
 .likesanddislikes{
     display: flex;
     align-items: flex-start;
-    float: left;
-    margin-left: 20px;
 }

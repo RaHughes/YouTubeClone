@@ -16,3 +16,10 @@
 .col-8{
     margin-left: 3%;
 }
+
+.sidebar{
+    margin-left: 40px;
+    display: flex;
+    align-items: left;
+    justify-content: left;
+}
