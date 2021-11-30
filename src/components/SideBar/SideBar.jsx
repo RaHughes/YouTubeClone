@@ -1,5 +1,6 @@
 import React from 'react'; 
 import axios from 'axios';
+import './SideBar.css'
 
 const SideBar = (props) => {
 
@@ -11,12 +12,12 @@ const SideBar = (props) => {
         )
     }
     else{
-        return(<div className="videos">
+        return(<div>
             {props.videos.map(video => {
-                return <form key={Math.random()} onSubmit={() => props.selectVideo(video.id.videoId, video)}> 
+                return <form className="videos" key={Math.random()} onSubmit={() => props.selectVideo(video.id.videoId, video)}>
+                <button type="submit">Select Video</button>
                 <iframe width="300" height="140" src={`https://www.youtube.com/embed/${video.id.videoId}`}>
                 </iframe>
-                <button type="submit">Select Video</button>
                 </form>
             })}
             </div>
