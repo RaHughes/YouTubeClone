@@ -80,6 +80,9 @@ class App extends Component {
         description = this.state.video.snippet.description
     }
 
+    let newTitle = title.replace(/[&\/\\#,+()$~%.:*?<>{};]/g, '')
+    let newDescription = description.replace(/[&\/\\#,+()$~%.:*?<>{};]/g, '')
+
     return(
         <div>
             <div className="header">
@@ -92,11 +95,11 @@ class App extends Component {
                     width="100%" height="600px"
                     src={`https://www.youtube.com/embed/${this.state.videoId}`}
                     frameBorder="0"></iframe>
-                    <h2>{title}</h2>
-                    <h4>{description}</h4>
+                    <h2>{newTitle}</h2>
+                    <h4>{newDescription}</h4>
                     {<Comments videoId={this.state.videoId} comments={this.state.comments} addComment={this.addComment}/>}
                 </div>
-                <div className="col-4 d-flex justify-content-end" >
+                <div className="col-3 d-flex justify-content-left sidebar" >
                     <SideBar videos={this.state.videos} selectVideo={this.selectVideo}/>
                 </div>
             </div>
